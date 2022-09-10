@@ -5,5 +5,6 @@ appName = "challenges"
 
 urlpatterns = [
     path("<int:week>",views.index_by_number,name="weekChalengeNumber"),
-    path("",views.index,name="weekChalenge")
+    path("<str:week>",views.weekchallenge,name="weekChalenge"),
+    path("",views.index,name="index")
 ]

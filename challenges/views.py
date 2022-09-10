@@ -1,4 +1,5 @@
 import imp
+from multiprocessing import context
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseNotFound,HttpResponseRedirect
 from django.urls import reverse
@@ -8,10 +9,26 @@ weekly_challenge = {
     "Tue":"Tue challenge",
     "Web":"Web challenge",
     "Thu":"Thu challenge",
-    "Fri":"Fri challenge"
+    "Fri":None
 }
 
 # Create your views here.
+def index(request):
+    keys = list(weekly_challenge.keys())
+    context ={"weeks":keys}
+    try:
+        return render(request,"challenges/index.html",context)
+    except:
+        return HttpResponseNotFound("This week day not supported")
+
+def weekchallenge(request,week):
+
+    context={
+        "week":week,
+        "challenge":weekly_challenge[week]
+    }
+    return render(request,"challenges/challenge.html",context)
+
 def index_by_number(request,week):
     weeks = list(weekly_challenge.keys())
 
@@ -22,9 +39,3 @@ def index_by_number(request,week):
     redirect_url = reverse('weekChalenge',args=[redirect_week])
     return HttpResponseRedirect(redirect_url)
 
-def index(request):
-    context = {"message":"yo boy it's your keshav"}
-    try:
-        return render(request,"challenges/index.html",context)
-    except:
-        return HttpResponseNotFound("This week day not supported")
