@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+{{week|title}} | challenge
+{% endblock page_title %}
+
+{% block content %}
+
+{% include "challenges/includes/header.html" with go_topage="home" %}
+
+<h1>{{week|title}}</h1>
+{% if challenge is not None %}
+<p>{{challenge}}</p>
+{% else %}
+<p> There  is no challenge set yet. </p>
+{% endif %}
+{% endblock content %}

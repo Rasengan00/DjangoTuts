@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'challenges/index.css' %}">
+{% endblock page_styles %}
+
+{% block page_title %}Challenges{% endblock page_title %}
+
+{% block content %}
+<h1>All Challenges</h1>
+<ul>
+    {% for week in weeks  %}
+    <li>
+        <a href={% url 'weekChalenge' week %}>{{week|title}}</a>
+    </li>
+    {% endfor %}
+</ul>
+<h1>{{week}}</h1>
+{% endblock content %}
