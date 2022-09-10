@@ -23,7 +23,8 @@ def index_by_number(request,week):
     return HttpResponseRedirect(redirect_url)
 
 def index(request):
+    context = {"message":"yo boy it's your keshav"}
     try:
-        return render(request,"challenges/index.html")
+        return render(request,"challenges/index.html",context)
     except:
         return HttpResponseNotFound("This week day not supported")
