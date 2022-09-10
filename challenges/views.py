@@ -1,7 +1,7 @@
 import imp
 from multiprocessing import context
 from django.shortcuts import render
-from django.http import HttpResponse,HttpResponseNotFound,HttpResponseRedirect
+from django.http import Http404,HttpResponseNotFound,HttpResponseRedirect
 from django.urls import reverse
 
 weekly_challenge = {
@@ -19,21 +19,23 @@ def index(request):
     try:
         return render(request,"challenges/index.html",context)
     except:
-        return HttpResponseNotFound("This week day not supported")
+        raise Http404()
 
 def weekchallenge(request,week):
-
-    context={
+    try:
+        context={
         "week":week,
         "challenge":weekly_challenge[week]
-    }
-    return render(request,"challenges/challenge.html",context)
+        }
+        return render(request,"challenges/challenge.html",context)
+    except:
+        raise Http404()
 
-def index_by_number(request,week):
+def week_challenge_by_number(request,week):
     weeks = list(weekly_challenge.keys())
 
     if week > len(weeks):
-        return HttpResponseNotFound("invalid week")
+        raise Http404
 
     redirect_week = weeks[week-1]
     redirect_url = reverse('weekChalenge',args=[redirect_week])
