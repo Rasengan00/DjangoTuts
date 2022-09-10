@@ -22,9 +22,8 @@ def index_by_number(request,week):
     redirect_url = reverse('weekChalenge',args=[redirect_week])
     return HttpResponseRedirect(redirect_url)
 
-def index(request,week):
+def index(request):
     try:
-        challenge_text = weekly_challenge[week]
-        return HttpResponse(challenge_text)
+        return render(request,"challenges/index.html")
     except:
         return HttpResponseNotFound("This week day not supported")
